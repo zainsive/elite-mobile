@@ -18,6 +18,10 @@ class KPasswordField extends StatelessWidget {
         fontSize: 20,
         fontWeight: FontWeight.w400,
       ),
+      style: kBlackStyle.copyWith(
+        fontSize: 20,
+        fontWeight: FontWeight.w400,
+      ),
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       decoration: BoxDecoration(
         color: const Color(0xffFAFAFA),

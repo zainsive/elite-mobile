@@ -1,34 +1,29 @@
 import 'package:elite_commerce/common/helpers/warning_helper.dart';
 import 'package:elite_commerce/common/widgets/buttons/k_button.dart';
-import 'package:elite_commerce/modules/authentication/login/widgets/k_googleBtn.dart';
 import 'package:elite_commerce/common/widgets/text_fields/k_passwordField.dart';
 import 'package:elite_commerce/common/widgets/text_fields/k_textField.dart';
 import 'package:elite_commerce/custom/color.dart';
 import 'package:elite_commerce/custom/styles.dart';
 import 'package:elite_commerce/common/widgets/header/k_authHeader.dart';
-import 'package:elite_commerce/utils/router/router_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final email = TextEditingController();
   final password = TextEditingController();
+  final name = TextEditingController();
 
   Future<void> submitForm() async {
-    if (email.text.isNotEmpty && email.text.isNotEmpty) {
-      Future.delayed(const Duration(seconds: 2)).whenComplete(() {
-        showWarning(
-          msg: 'Successfully Login!',
-          color: Colors.green,
-        ).whenComplete(() => context.goNamed(MyRouterConstants.homeRoute));
-      });
+    if (email.text.isNotEmpty &&
+        email.text.isNotEmpty &&
+        name.text.isNotEmpty) {
     } else {
       showWarning(
         msg: 'Required All Fields!',
@@ -36,12 +31,11 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<void> showWarning({required String msg, Color? color}) async {
+  showWarning({required String msg}) {
     Navigator.pop(context);
     WarningHelper().kSnackBar(
       msg: msg,
       ctx: context,
-      color: color,
     );
   }
 
@@ -78,21 +72,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 40,
                       ),
                       Text(
-                        'Welcome Back!',
+                        'Create an\nAccount',
                         style: kBlackStyle.copyWith(
                           fontSize: 32,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
-                      Text(
-                        'Sign in continue.',
-                        style: kBlackStyle.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      KTextField(
+                        title: 'Full Name',
+                        controller: name,
                       ),
                       const SizedBox(
                         height: 20,
@@ -110,49 +101,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                height: 1,
-                                color: const Color(0xffDCDCDC),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(
-                                'Or',
-                                style: kGreyStyle.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                height: 1,
-                                color: const Color(0xffDCDCDC),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const KGoogleButton(),
-                      const SizedBox(
-                        height: 20,
-                      ),
                       KButton(
                         onTap: () {
                           WarningHelper().kLoadingDialog(ctx: context);
                           submitForm();
                         },
-                        title: 'DIVE IN',
+                        title: 'Register',
                       ),
                       const SizedBox(
                         height: 10,
@@ -164,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Don't have an account?",
+                              "Already have an account?",
                               style: kBlackStyle.copyWith(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w300,
@@ -172,8 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             TextButton(
                               onPressed: () {
-                                context
-                                    .goNamed(MyRouterConstants.registerRoute);
+                                context.pop();
                               },
                               style: ButtonStyle(
                                 overlayColor: MaterialStateProperty.all(
@@ -181,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               child: Text(
-                                'Sign Up',
+                                'Sign in',
                                 style: kGreenStyle.copyWith(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w700,
